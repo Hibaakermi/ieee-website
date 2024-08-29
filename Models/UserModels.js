@@ -1,5 +1,5 @@
 const mongoose=require("mongoose")
-//const bcrypt = require("bcrypt")
+const bcrypt = require("bcryptjs")
 
 const userSchema = new mongoose.Schema(
     {
@@ -67,6 +67,10 @@ const userSchema = new mongoose.Schema(
     userSchema.methods.comparePassword = async function(candidatePassword){
         return await bcrypt.compare(candidatePassword, this.password);
     };
+
+    userSchema.methods.register = function(){
+        return { message: "User register", userId: this.id };
+    };
     
     userSchema.methods.login = function(){
         return { message: "User logged in", userId: this.id };
@@ -80,70 +84,7 @@ const userSchema = new mongoose.Schema(
         return this.save();
     };
       
-      userSchema.methods.sendMessage = function(to, content) {
-        this.messages.push({ from: this.username, content });
-        return this.save();
-    };
-      
-      userSchema.methods.viewMessages = function(){
-        return this.messages;
-    };
-      
-      userSchema.methods.joinEvent = function(eventId) {
-        if (!this.events.includes(eventId)) {
-            this.events.push(eventId);
-        }
-        
-        return this.save();
-    };
-      
-      userSchema.methods.leaveEvent = function(eventId) {
-        this.events = this.events.filter(event => event !== eventId);
-        return this.save();
-    };
-      
-      userSchema.methods.joinProject = function(projectId) {
-        if (!this.projects.includes(projectId)){
-          this.projects.push(projectId);
-        }
-        
-        return this.save();
-    };
-      
-      userSchema.methods.leaveProject = function(projectId) {
-        this.projects = this.projects.filter(project => project !== projectId);
-        return this.save();
-    };
-      
-      userSchema.methods.createTask = function(task) {
-        this.tasks.push(task);
-        return this.save();
-    };
-      
-      userSchema.methods.updateTask = function(taskId, updatedTask) {
-        const task = this.tasks.id(taskId);
-        if (task) {
-          Object.assign(task, updatedTask);
-          return this.save();
-        }
-        throw new Error("Task not found");
-    };
-
-      
-      userSchema.methods.provideFeedback = function(feedback) {
-        this.achievements.push(feedback);
-        return this.save();
-    };
-
-      
-      userSchema.methods.viewAchievements = function() {
-        return this.achievements;
-    };
-      
-      userSchema.methods.checkActivityScore = function() {
-        return this.activityScore;
-    };
-
+     
     
     
 const User = mongoose.model('User', userSchema);

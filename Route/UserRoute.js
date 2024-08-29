@@ -1,13 +1,17 @@
-const router = require("express").Router();
+const router = require('express').Router();
 
+const hashedPassword = require('../Middleware/Authenticate');
 const userController = require('../Controllers/UserControllers');
-const hashPassword = require('../Middleware/Authenticate')
 
-router.post('/register', userController.register);
+
+
+//router.post('/user/userController', userController.register);
+
+router.post('/register', hashedPassword, userController.register);
 router.post('/login', userController.login);
-router.post('/logout', userController.logout);
-router.put('/updateProfile/:userId', userController.updateProfile);
+//router.post('/logout', userController.logout);
+//router.put('/updateProfile/:userId', userController.updateProfile);
 //router.post('/sendMessage', UserControllers.sendMessage);
 //router.get('/viewMessages/:userId', UserControllers.viewMessages);
 
-module.exports=router
+module.exports=router;

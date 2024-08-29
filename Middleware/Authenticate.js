@@ -2,7 +2,7 @@ const bcrypt = require('bcryptjs');
 const User = require("../Models/UserModels");
 
 
-const hashPassword = async (req, res, next) =>{
+const hashedPassword = async (req, res, next) =>{
     if (!req.body.password) 
     return next();
 
@@ -12,4 +12,4 @@ const hashPassword = async (req, res, next) =>{
 };
 
 
-module.exports = hashPassword;
+module.exports = hashedPassword;
