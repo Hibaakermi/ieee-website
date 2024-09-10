@@ -3,11 +3,7 @@ const bcrypt = require("bcryptjs")
 
 const userSchema = new mongoose.Schema(
     {
-        id:{
-            type: mongoose.Schema.Types.ObjectId,
-            auto: true,
-
-        },
+    
         username:{
             type: String,
             required: true,
@@ -63,27 +59,7 @@ const userSchema = new mongoose.Schema(
     );
 
 
-    //pour comparer mdp
-    userSchema.methods.comparePassword = async function(candidatePassword){
-        return await bcrypt.compare(candidatePassword, this.password);
-    };
-
-    userSchema.methods.register = function(){
-        return { message: "User register", userId: this.id };
-    };
-    
-    userSchema.methods.login = function(){
-        return { message: "User logged in", userId: this.id };
-    };
-    
-    userSchema.methods.logout = function() {
-        return { message: "User logged out" };
-    };
-      userSchema.methods.updateProfile = function(updatedData) {
-        Object.assign(this, updatedData);
-        return this.save();
-    };
-      
+   
      
     
     
